@@ -1,22 +1,18 @@
-import { db } from "~/server/db";
+import { SignedOut, SignedIn } from "@clerk/nextjs";
+
+import { Images } from "./_components/Images";
 
 // export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  const images = await db.query.images.findMany({
-    orderBy: (images, { desc }) => [desc(images.id)],
-  });
-
+export default function HomePage() {
   return (
     <main>
-      <div className="flex flex-wrap">
-        {images.map((image, index) => (
-          <div key={index} className="h-1/3 w-1/3 p-2">
-            <img src={image.url} alt={`Image ${image.id}`} />
-            <h5>{image.name}</h5>
-          </div>
-        ))}
-      </div>
+      <SignedOut>
+        <div className="text-center text-2xl">Sign in to view</div>
+      </SignedOut>
+      <SignedIn>
+        <Images />
+      </SignedIn>
     </main>
   );
 }
