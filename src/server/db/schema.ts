@@ -18,19 +18,20 @@ import {
  */
 export const createTable = pgTableCreator((name) => `totite_${name}`);
 
-export const posts = createTable(
-  "post",
+export const images = createTable(
+  "image",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
+    name: varchar("name", { length: 256 }).notNull(),
+    url: varchar("url", { length: 256 }).notNull(),
+    createdAt: timestamp("createdAt", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
+    updatedAt: timestamp("updatedAt", { withTimezone: true }).$onUpdate(
+      () => new Date(),
     ),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
+  (image) => ({
+    nameIndex: index("name_idx").on(image.name),
+  }),
 );
