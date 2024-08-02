@@ -11,7 +11,7 @@ export function TopNav() {
   return (
     <div className="flex items-center justify-between border-b p-4 text-xl font-semibold">
       <div>Gallery</div>
-      <div>
+      <div className="flex gap-10">
         <SignedOut>
           <SignInButton />
         </SignedOut>

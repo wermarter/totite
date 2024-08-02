@@ -1,12 +1,7 @@
-import { auth } from "@clerk/nextjs/server";
-import { db } from "~/server/db";
+import { fetchMyImages } from "~/server/queries";
 
 export async function Images() {
-  const { userId } = auth();
-  const images = await db.query.images.findMany({
-    where: (images, { eq }) => eq(images.userId, userId!),
-    orderBy: (images, { desc }) => [desc(images.id)],
-  });
+  const images = await fetchMyImages();
 
   return (
     <div className="flex flex-wrap">
